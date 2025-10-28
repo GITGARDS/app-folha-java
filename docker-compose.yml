@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.39 # Imagem oficial do MySQL
+    container_name: mysql-db # Nome do contêiner
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: appfolha	  
+    ports:
+      - 3306:3306 # Mapeia a porta 3306 do contêiner para a 3306 da sua máquina (opcional)
+    volumes:
+      - mysql-data:/var/lib/mysql # Persistência de dados
+
+  app:
+    build: . # Constrói a imagem a partir do Dockerfile neste diretório
+    container_name: java-app # Nome do contêiner
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql # Garante que o MySQL inicie antes da aplicação Java
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/appfolha?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+volumes:
+  mysql-data: # Define o volume de persistência para o MySQL
