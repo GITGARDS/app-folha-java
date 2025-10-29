@@ -24,6 +24,7 @@ services:
       - 8080:8080
     depends_on:
       - mysql-db # Garante que o MySQL inicie antes da aplicação Java
+    restart: always
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/appfolha?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
@@ -37,6 +38,7 @@ services:
     container_name: frontend-angular-container
     ports:
       - 4200:80 # Mapeia a porta do Nginx (80) para a porta do host (4200, por exemplo)
+    restart: always
     depends_on:
       - backend-java # Opcional, mas ajuda a garantir a ordem de inicialização
 
