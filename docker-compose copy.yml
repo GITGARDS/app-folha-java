@@ -33,7 +33,7 @@ services:
   frontend-angular:
     build:
       context: . # Pasta onde está o Dockerfile do Angular
-      dockerfile: ./dockerfiles/angular.Dockerfile # Pode usar um Dockerfile para produção
+      dockerfile: ../dockerfiles/angular.Dockerfile # Pode usar um Dockerfile para produção
     container_name: frontend-angular-container
     ports:
       - 4200:80 # Mapeia a porta do Nginx (80) para a porta do host (4200, por exemplo)
