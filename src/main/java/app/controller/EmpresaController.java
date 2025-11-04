@@ -20,42 +20,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Funcionario;
-import app.service.FuncionarioService;
+import app.entity.Empresa;
+import app.service.EmpresaService;
+
 
 @RestController
-@RequestMapping("/api/funcionario")
+@RequestMapping("/api/empresa")
 @CrossOrigin("*")
-public class FuncionarioController {
+public class EmpresaController {
 
 	@Autowired
-	private FuncionarioService funcionarioService;
+	private EmpresaService empresaService;
 
 	@PostMapping
-	public ResponseEntity<Funcionario> create(@RequestBody Funcionario data) {
+	public ResponseEntity<Empresa> create(@RequestBody Empresa data) {
 		try {
-			Funcionario resp = this.funcionarioService.create(data);
-			return new ResponseEntity<Funcionario>(resp, HttpStatus.OK);
+			Empresa resp = this.empresaService.create(data);
+			return new ResponseEntity<Empresa>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PostMapping("/createAll")
-	public ResponseEntity<List<Funcionario>> create(@RequestBody List<Funcionario> data) {
+	public ResponseEntity<List<Empresa>> create(@RequestBody List<Empresa> data) {
 		try {
-			List<Funcionario> resp = this.funcionarioService.create(data);
-			return new ResponseEntity<List<Funcionario>>(resp, HttpStatus.OK);
+			List<Empresa> resp = this.empresaService.create(data);
+			return new ResponseEntity<List<Empresa>>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Funcionario> editById(@PathVariable long id, @RequestBody Funcionario data) {
+	public ResponseEntity<Empresa> editById(@PathVariable long id, @RequestBody Empresa data) {
 		try {
-			Funcionario resp = this.funcionarioService.editById(id, data);
-			return new ResponseEntity<Funcionario>(resp, HttpStatus.OK);
+			Empresa resp = this.empresaService.editById(id, data);
+			return new ResponseEntity<Empresa>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -64,7 +65,7 @@ public class FuncionarioController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteById(@PathVariable long id) {
 		try {
-			String resp = this.funcionarioService.deleteById(id);
+			String resp = this.empresaService.deleteById(id);
 			return new ResponseEntity<String>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Erro ao tentar excluir registro!", HttpStatus.BAD_REQUEST);
@@ -72,36 +73,37 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Funcionario> findById(@PathVariable long id) {
+	public ResponseEntity<Empresa> findById(@PathVariable long id) {
 		try {
-			Funcionario resp = this.funcionarioService.findById(id);
-			return new ResponseEntity<Funcionario>(resp, HttpStatus.OK);
+			Empresa resp = this.empresaService.findById(id);
+			return new ResponseEntity<Empresa>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@GetMapping(value = "/findAll")
-	public ResponseEntity<List<Funcionario>> findAll() {
+	@GetMapping(value = "/findAll" )
+	public ResponseEntity<List<Empresa>> findAll() {
 		try {
-			List<Funcionario> resp = this.funcionarioService.findAll();
-			return new ResponseEntity<List<Funcionario>>(resp, HttpStatus.OK);
+			List<Empresa> resp = this.empresaService.findAll();
+			return new ResponseEntity<List<Empresa>>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@GetMapping(value = "/findAllPg")
-	public ResponseEntity<Page<Funcionario>> findAll(@RequestParam String filter, @RequestParam Integer page,
+	public ResponseEntity<Page<Empresa>> findAll(@RequestParam String filter, @RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String sortDirection) {
 		try {
 			Pageable pageable = PageRequest.of(page, size, Sort.Direction.valueOf(sortDirection.toUpperCase()), sort);
-			Page<Funcionario> resp = this.funcionarioService.findAll(filter, pageable);
-			return new ResponseEntity<Page<Funcionario>>(resp, HttpStatus.OK);
+			Page<Empresa> resp = this.empresaService.findAll(filter, pageable);
+			return new ResponseEntity<Page<Empresa>>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
-	}
+	}	
+	
 
 }

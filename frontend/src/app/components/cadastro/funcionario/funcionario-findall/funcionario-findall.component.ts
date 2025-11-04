@@ -14,10 +14,11 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { debounceTime, delay, distinctUntilChanged, fromEvent, merge, tap } from "rxjs";
-import { Funcionario, FuncionarioInit, FuncionarioPageable } from "../../../models/funcionario";
-import { Page } from "../../../models/page";
-import { FuncionarioService } from "../../../services/funcionario.service";
-import { FurncionarioFormComponent } from "../furncionario-form/furncionario-form.component";
+import { DisplayedColumnsDef } from "../../../../models/displayColumnsDef";
+import { Funcionario, FuncionarioInit, FuncionarioPageable } from "../../../../models/funcionario";
+import { Page } from "../../../../models/page";
+import { FuncionarioService } from "../../../../services/funcionario.service";
+import { FuncionarioFormComponent } from "../funcionario-form/funcionario-form.component";
 import { FuncionarioFindallDataSource } from "./funcionario-findall-datasource";
 
 @Component({
@@ -41,12 +42,12 @@ import { FuncionarioFindallDataSource } from "./funcionario-findall-datasource";
   ],
 })
 export class FuncionarioFindallComponent implements OnInit, AfterViewInit {
+  title = 'funcionarios';
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('input') input!: ElementRef;
   dataSource!: FuncionarioFindallDataSource;
-
-  displayedColumns = ['id', 'nome', 'cargo', 'salarioBase', 'acoes'];
 
   funcionarioService = inject(FuncionarioService);
 
@@ -59,12 +60,28 @@ export class FuncionarioFindallComponent implements OnInit, AfterViewInit {
   pageIndex = 0;
   pageSize = 10;
 
+  displayedColumnsDef: DisplayedColumnsDef[] = [
+    { label: 'nome', header: 'NOME' },
+    { label: 'cargo', header: 'CARGO' },
+    { label: 'salarioBase', header: 'SALARIO BASE' },
+  ];
+  displayedColumns: string[] = [];
+
+  getDisplayedColumns(valor: DisplayedColumnsDef[]) {
+    let ret: string[] = ['id'];
+    ret = ret.concat(valor.map((x) => x.label));
+    ret.push('action');
+    return ret;
+  }
+
   ngOnInit(): void {
+    this.displayedColumns = this.getDisplayedColumns(this.displayedColumnsDef);
     this.dataSource = new FuncionarioFindallDataSource(this.funcionarioService);
     const page: Page = {
       page: this.pageIndex,
       size: this.pageSize,
       sort: 'id',
+      sortDirection: 'asc',
     };
     this.dataSource.loadFuncionarios('', page);
 
@@ -112,7 +129,17 @@ export class FuncionarioFindallComponent implements OnInit, AfterViewInit {
           this.onPageDefault();
         })
       )
-      .subscribe();
+      .subscribe({
+        next: (ret: any) => {
+          const page: Page = {
+            page: this.paginator.pageIndex,
+            size: this.paginator.pageSize,
+            sort: ret.active,
+            sortDirection: ret.direction,
+          };
+          this.loadFuncionarioPage(this.input.nativeElement.value, page);
+        },
+      });
   }
 
   loadFuncionarioPage(input: string, page: Page) {
@@ -141,6 +168,7 @@ export class FuncionarioFindallComponent implements OnInit, AfterViewInit {
       page: this.paginator.pageIndex,
       size: this.paginator.pageSize,
       sort: this.sort.active,
+      sortDirection: this.sort.direction,
     };
     this.loadFuncionarioPage(this.input.nativeElement.value, page);
   }
@@ -162,7 +190,7 @@ export class FuncionarioFindallComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(opcao: string, data: Funcionario): void {
-    const dialogRef = this.dialog.open(FurncionarioFormComponent, {
+    const dialogRef = this.dialog.open(FuncionarioFormComponent, {
       data: { opcao: opcao, data: data },
     });
 

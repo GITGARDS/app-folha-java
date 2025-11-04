@@ -1,0 +1,129 @@
+<form [formGroup]="form" novalidate>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title style="font-weight: bold; text-transform: uppercase;">{{ title }}</mat-card-title>
+      <mat-card-subtitle  style="font-size: small">
+        {{ data.opcao === 'editar' ? 'Editando id=' + data.data.id : 'Novo registro' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Codigo</mat-label>
+            <input matInput formControlName="codigo" />
+            @if (form.controls['codigo'].hasError('required')) {
+            <mat-error>Campo codigo e de preenchimento <strong>obrigatorio</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Descricao</mat-label>
+            <input matInput formControlName="descricao" />
+            @if (form.controls['descricao'].hasError('required')) {
+            <mat-error>Campo descricao e de preenchimento <strong>obrigatorio</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col">
+          <mat-label class="matLabel">Tipo</mat-label>
+        </div>
+        <div class="col">
+          <mat-radio-group formControlName="tipo">
+            <mat-radio-button value="P">Provento</mat-radio-button>
+            <mat-radio-button value="D">Desconto</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col">
+          <mat-label class="matLabel">Automatico pelo sistema?</mat-label>
+        </div>
+        <div class="col">
+          <mat-radio-group formControlName="automatico">
+            <mat-radio-button [value]="true">Sim</mat-radio-button>
+            <mat-radio-button [value]="false">Nao</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col">
+          <mat-label class="matLabel">Tipo de Valor</mat-label>
+        </div>
+        <div class="col">
+          <mat-radio-group formControlName="tipoValor">
+            <mat-radio-button value="">Nenhum</mat-radio-button>
+            <mat-radio-button value="P">% Porcentagem</mat-radio-button>
+            <mat-radio-button value="V">$ Valor</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col">
+          <mat-form-field>
+            <mat-label>
+              {{ form.value.tipoValor === 'P' ? '% Porcentagem' : '$ Valor' }}
+            </mat-label>
+
+            <input matInput formControlName="valor" />
+            @if (form.controls['valor'].hasError('required')) {
+            <mat-error>Campo valor e de preenchimento <strong>obrigatorio</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col">
+          <mat-label class="matLabel">Incidencia</mat-label>
+        </div>
+        <div class="col">
+          <mat-radio-group formControlName="incidencia">
+            @for (item of onIncidencia; track $index) {
+              <mat-radio-button [value]="item.value">{{item.label}}</mat-radio-button>
+            }
+          </mat-radio-group>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col">
+          <mat-label class="matLabel">Ativo</mat-label>
+        </div>
+
+        <div class="col">
+          <mat-radio-group formControlName="ativo">
+            <mat-radio-button [value]="true">Sim</mat-radio-button>
+            <mat-radio-button [value]="false">Nao</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+
+    <mat-card-actions>
+      <button matButton [mat-dialog-close]="false" (click)="onNoClick()">Cancelar</button>
+      <button
+        matButton
+        [mat-dialog-close]="true"
+        (click)="okClick()"
+        cdkFocusInitial
+        [disabled]="form.invalid"
+      >
+        Ok
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+<!-- {{ data | json }} -->

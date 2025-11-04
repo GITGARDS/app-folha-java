@@ -9,16 +9,16 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      @for (item of lista; track $index) {
-      <a mat-list-item [routerLink]="item.route" >
+    @for (item of lista; track $index) {
+      <a mat-list-item [routerLink]="item.route">
         <mat-icon>{{ item.icon }}</mat-icon>
         <span>
           {{ item.name }}
         </span>
       </a>
 
-      }
-    </mat-nav-list>
+    }
+  </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">

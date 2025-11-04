@@ -1,0 +1,167 @@
+<div class="form-container">
+  <h1 style="text-align: center; text-transform: uppercase">{{ title }}</h1>
+  <button matFab extended (click)="onCreate()" style="width: 150px">
+    <mat-icon>add</mat-icon>
+    Novo
+  </button>
+  <section class="section-filter">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput placeholder="Ex. Mia" #input />
+    </mat-form-field>
+  </section>
+
+  <section>
+    <div style="height: 2px">
+      @if (isLoading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
+    </div>
+
+    <div class="mat-elevation-z8">
+      <div class="tabela">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          matSortActive="id"
+          matSortDisableClear
+          matSortDirection="asc"
+          aria-label="Elements"
+          multiTemplateDataRows
+        >
+          <ng-container matColumnDef="id" sticky="#">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+          </ng-container>
+
+          @for (item of displayedColumnsDef; track $index) {
+          <ng-container [matColumnDef]="item.label">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ item.header }}</th>
+            <td mat-cell *matCellDef="let row">{{ row[item.label] }}</td>
+          </ng-container>
+          }
+
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                matIconButton
+                aria-label="expand row"
+                (click)="toggle(row); $event.stopPropagation()"
+                class="example-toggle-button"
+                [class.example-toggle-button-expanded]="isExpanded(row)"
+              >
+                <mat-icon>keyboard_arrow_down</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+              <div
+                class="example-element-detail-wrapper"
+                [class.example-element-detail-wrapper-expanded]="isExpanded(row)"
+              >
+                <div class="example-element-detail">
+                  <mat-card class="example-element-diagram" [appearance]="'filled'">
+                    <div class="example-element-campos">
+                      <mat-label class="label">Tipo:</mat-label>
+                      <span class="text">{{ row.tipo }}</span>
+                      @switch (row.tipo) { @case ("P") {<span class="text">P R O V E N T O</span>}
+                      @default {<span class="text">D E S C O N T O</span>} }
+                    </div>
+
+                    <div class="example-element-campos">
+                      <span class="label">Automatico: </span>
+                      @switch (row.automatico) { @case (true) {<span class="text">Sim</span>}
+                      @default {<span class="text">Nao</span>} }
+                    </div>
+
+                    <div class="example-element-campos">
+                      <span class="label">Tipo Valor: </span>
+                      @switch (row.tipoValor) { @case ("P") {<span class="text">%</span>} @default
+                      {<span class="text">$</span>} }
+                    </div>
+
+                    <div class="example-element-campos">
+                      <span class="label">Valor: </span>
+                      <span class="text">{{ row.valor }}</span>
+                    </div>
+
+                    <div class="example-element-campos">
+                      <span class="label">Incidencia: </span>
+                      @switch (row.incidencia) { @case (0) {<span class="text">---</span>} @case (1)
+                      {<span class="text">INSS</span>} @case (2) {<span class="text">IRRF</span>}
+                      @case (3) {<span class="text">FGTS</span>} @case (4) {<span class="text"
+                        >INSS, IRRF</span
+                      >} @case (5) {<span class="text">INSS, FGTS</span>} @case (6) {<span
+                        class="text"
+                        >IRRF, FGTS</span
+                      >} @case (9) {<span class="text">INSS, IRRF, FGTS</span>} }
+
+                      <!-- <span class="text">{{ onGetIncidencia(row.incidencia)}}</span> -->
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef>ACOES</th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                matIconButton
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onEditById(row)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button mat-menu-item (click)="onDeleteById(row.id)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Excluir</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            class="example-element-row"
+            [class.example-expanded-row]="isExpanded(row)"
+            (click)="toggle(row)"
+          ></tr>
+
+          <tr
+            mat-row
+            *matRowDef="let row; columns: ['expandedDetail']"
+            class="example-detail-row"
+          ></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+              Nenhum dado correspondente ao filtro "{{ input.value }}"
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        class="demo-paginator"
+        (page)="handlePageEvent($event)"
+        [showFirstLastButtons]="true"
+        [pageSizeOptions]="[5, 10]"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </section>
+</div>

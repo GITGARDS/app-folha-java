@@ -1,161 +1,114 @@
-<div class="container-principal">
-  <button matFab (click)="onCreate()">
-    <mat-icon>add</mat-icon>
-  </button>
+<form [formGroup]="form" novalidate>
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>{{
+          data.opcao === 'editar'
+            ? 'Editando proventos/descontos de id=' + data.data.id
+            : 'Novo proventos/descontos'
+        }}</mat-card-title>
+      </mat-card-header>
+      <br />
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Codigo</mat-label>
+              <input matInput formControlName="codigo" />
+              @if (form.controls['codigo'].hasError('required')) {
+              <mat-error>Campo codigo e de preenchimento <strong>obrigatorio</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Descricao</mat-label>
+              <input matInput formControlName="descricao" />
+              @if (form.controls['descricao'].hasError('required')) {
+              <mat-error>Campo descricao e de preenchimento <strong>obrigatorio</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-label>Tipo</mat-label>
+          </div>
+          <div class="col">
+            <mat-radio-group formControlName="tipo">
+              <mat-radio-button value="P">Provento</mat-radio-button>
+              <mat-radio-button value="D">Desconto</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-label>Automatico pelo sistema?</mat-label>
+          </div>
+          <div class="col">
+            <mat-radio-group formControlName="automatico">
+              <mat-radio-button value="true">Sim</mat-radio-button>
+              <mat-radio-button value="false">Nao</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-label>Tipo de Valor</mat-label>
+          </div>
+          <div class="col">
+            <mat-radio-group formControlName="tipoValor">
+              <mat-radio-button value="P">% Porcentagem</mat-radio-button>
+              <mat-radio-button value="V">$ Valor</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Valor</mat-label>
+              <input matInput formControlName="valor" type="number" />
+              @if (form.controls['valor'].hasError('required')) {
+              <mat-error>Campo valor e de preenchimento <strong>obrigatorio</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-label>Incidencia</mat-label>
+          </div>
+          <div class="col">
+            <mat-radio-group formControlName="incidencia">
+              <mat-radio-button value="INSS">INSS</mat-radio-button>
+              <mat-radio-button value="IRRF">IRRF</mat-radio-button>
+              <mat-radio-button value="FGTS">FGTS</mat-radio-button>
+              <mat-radio-button value="INSS, FGTS">INSS, FGTS</mat-radio-button>
+              <mat-radio-button value="INSS, IRRF">INSS, IRRF</mat-radio-button>
+              <mat-radio-button value="INSS, FGTS, IRRF">INSS, FGTS, IRRF</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-label>Ativo</mat-label>
+          </div>
+          <div class="col">
+            <mat-radio-group formControlName="ativo">
+              <mat-radio-button value="true">Sim</mat-radio-button>
+              <mat-radio-button value="false">Nao</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  <mat-dialog-actions>
+    <button matButton [mat-dialog-close]="false" (click)="onNoClick()">Cancelar</button>
+    <button [disabled]="!form.valid" [mat-dialog-close]="this.form.value" matButton cdkFocusInitial>
+      Ok
+    </button>
+  </mat-dialog-actions>
+</form>
 
-  <mat-form-field class="full-width-table-50">
-    <mat-label>Filter</mat-label>
-    <input matInput placeholder="Ex. Mia" #input />
-  </mat-form-field>
-
-  <section class="example-container mat-elevation-z2">
-    @if (isLoading) {
-    <div class="example-loading-shade">
-      @if (isLoading) {
-      <!-- <mat-spinner></mat-spinner> -->
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      }
-    </div>
-    }
-
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      class="full-width-table"
-      matSort
-      matSortActive="id"
-      matSortDisableClear
-      matSortDirection="asc"
-      aria-label="Elements"
-    >
-      <!-- Id Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-      </ng-container>
-
-      <!-- Nome Column -->
-      <ng-container matColumnDef="nome">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
-        <td mat-cell *matCellDef="let row">{{ row.nome }}</td>
-      </ng-container>
-      <!-- Cargo Column -->
-      <ng-container matColumnDef="cargo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cargo</th>
-        <td mat-cell *matCellDef="let row">{{ row.cargo }}</td>
-      </ng-container>
-      <!-- Salario Base Column -->
-      <ng-container matColumnDef="salarioBase">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salario Base</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.salarioBase | currency }}
-        </td>
-      </ng-container>
-      <!-- Acoes Column -->
-      <ng-container matColumnDef="acoes">
-        <th mat-header-cell *matHeaderCellDef>Acoes</th>
-        <td mat-cell *matCellDef="let row">
-          <button
-            matIconButton
-            [matMenuTriggerFor]="menu"
-            aria-label="Example icon-button with a menu"
-          >
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="onEditById(row)">
-              <mat-icon>edit</mat-icon>
-              <span>Editar</span>
-            </button>
-            <button mat-menu-item (click)="onDeleteById(row.id)">
-              <mat-icon>delete</mat-icon>
-              <span>Excluir</span>
-            </button>
-          </mat-menu>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-      <ng-container *matNoDataRow>
-        <tr class="mat-row">
-          <td class="mat-cell">Nenhum registro encontrado...</td>
-        </tr>
-      </ng-container>
-    </table>
-    <mat-paginator
-      class="demo-paginator"
-      (page)="handlePageEvent($event)"
-      [showFirstLastButtons]="true"
-      [pageSizeOptions]="[5, 10]"
-      aria-label="Select page"
-    >
-    </mat-paginator>
-  </section>
-</div>
-
-
-.container-principal{
-  padding: 5px;
-}
-.example-container {
-  /* height: 400px; */
-  /* width: 550px; */
-  max-width: 100%;
-  overflow: auto;
-  position: relative;
-}
-
-.example-table-container {
-  position: relative;
-  min-height: 200px;
-  max-height: 400px;
-  overflow: auto;
-}
-
-.example-loading-shade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 56px;
-  right: 0;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.full-width-table {
-  width: 100%;
-}
-
-.full-width-table-50 {
-  display: flex;
-  width: 50%;
-  margin-top: 10px;
-}
-
-.demo-toggles {
-  display: flex;
-  flex-direction: column;
-}
-
-.demo-toggles * {
-  margin-bottom: 16px;
-}
-
-.demo-options {
-  display: flex;
-  flex-direction: column;
-  width: 600px;
-}
-
-.demo-data * {
-  margin: 16px 0;
-}
-
-.demo-paginator {
-  width: 600px;
-}
+<!-- {{ data | json }} -->

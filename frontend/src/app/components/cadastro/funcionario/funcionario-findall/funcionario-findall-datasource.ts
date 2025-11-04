@@ -1,8 +1,8 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { BehaviorSubject, Observable, delay, map } from "rxjs";
-import { Funcionario, FuncionarioPageable, FuncionarioPageableInit } from "../../../models/funcionario";
-import { Page } from "../../../models/page";
-import { FuncionarioService } from "../../../services/funcionario.service";
+import { Funcionario, FuncionarioPageable, FuncionarioPageableInit } from "../../../../models/funcionario";
+import { Page } from "../../../../models/page";
+import { FuncionarioService } from "../../../../services/funcionario.service";
 
 /**
  * Data source for the FuncionarioFindall view. This class should
@@ -46,7 +46,7 @@ export class FuncionarioFindallDataSource implements DataSource<Funcionario> {
   loadFuncionarios(filter: string, page: Page) {
     this.setLoadingSubject(true);
     this.fucionarioService
-      .findAll(filter, page)
+      .findAllPg(filter, page)
       .pipe(delay(10))
       .subscribe({
         next: (pageable) => {

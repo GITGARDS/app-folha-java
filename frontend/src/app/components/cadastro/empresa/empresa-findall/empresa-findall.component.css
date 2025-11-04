@@ -1,0 +1,89 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.form-container .section-filter {
+  width: 50%;
+}
+
+.tabela {
+  min-height: 650px;
+}
+
+.button-row {
+  max-width: 150px;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  /* border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent; */
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: #ededf2;
+}
+
+.mat-column-id,
+.mat-column-cnaePrincipal,
+.mat-column-dataAbertura,
+.mat-column-mesReferencia,
+.mat-column-anoReferencia {
+  width: 64px;
+}
+
+.mat-mdc-table-sticky {
+  background: #c6d7f6;
+}
+
+.example-element-detail {
+  display: flex;
+  min-height: 0;
+}
+
+.example-element-diagram {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+}
+
+.example-element-campos {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  opacity: 1;
+}
+
+.example-element-campos .label,
+.text {
+  font-size: small;
+}
+.example-element-campos .label {
+  width: 120px;
+  text-align: end;
+  font-weight: bold;
+}
+.example-element-campos .text {
+  font-weight: 500;
+  color: blue;
+}

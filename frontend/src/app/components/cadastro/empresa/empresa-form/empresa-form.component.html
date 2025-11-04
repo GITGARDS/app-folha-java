@@ -1,0 +1,140 @@
+<form [formGroup]="form" novalidate>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title style="font-weight: bold; text-transform: uppercase">{{
+        title
+      }}</mat-card-title>
+      <mat-card-subtitle style="font-size: small">
+        {{ data.opcao === 'editar' ? 'Editando id=' + data.data.id : 'Novo registro' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>cnpj</mat-label>
+            <input matInput formControlName="cnpj" />
+            @if (form.controls['cnpj'].hasError('required')) {
+            <mat-error>Campo cnpj e de preenchimento <strong>obrigatorio</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>razaoSocial</mat-label>
+            <input matInput formControlName="razaoSocial" />
+            @if (form.controls['razaoSocial'].hasError('required')) {
+            <mat-error>Campo razaoSocial e de preenchimento <strong>obrigatorio</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>nomeFantasia</mat-label>
+            <input matInput formControlName="nomeFantasia" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>endereco</mat-label>
+            <input matInput formControlName="endereco" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>telefone</mat-label>
+            <input matInput formControlName="telefone" type="tel" />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>email</mat-label>
+            <input matInput formControlName="email" type="email" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>cnaePrincipal</mat-label>
+            <input matInput formControlName="cnaePrincipal" />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <!-- <mat-form-field>
+            <mat-label>dataAbertura</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataAbertura" type="date" />
+          </mat-form-field> -->
+
+          <mat-form-field>
+            <mat-label>Data Abertura</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataAbertura" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>regimeTributario</mat-label>
+            <input matInput formControlName="regimeTributario" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-label class="matLabel">regimeTributario</mat-label>
+        </div>
+        <div class="col">
+          <mat-radio-group formControlName="regimeTributario">
+            <mat-radio-button value="SIMPLES_NACINAL">Simples Nacional</mat-radio-button>
+            <mat-radio-button value="LUCRO_PRESUMIDO">Lucro Presumido</mat-radio-button>
+            <mat-radio-button value="LUCRO_REAL">Lucro Real</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>mesReferencia</mat-label>
+            <input matInput formControlName="mesReferencia" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <mat-label>anoReferencia</mat-label>
+            <input matInput formControlName="anoReferencia" type="number" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+
+    <mat-card-actions>
+      <button matButton [mat-dialog-close]="false" (click)="onNoClick()">Cancelar</button>
+      <button
+        matButton
+        [mat-dialog-close]="true"
+        (click)="okClick()"
+        cdkFocusInitial
+        [disabled]="form.invalid"
+      >
+        Ok
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+<!-- {{ data | json }} -->

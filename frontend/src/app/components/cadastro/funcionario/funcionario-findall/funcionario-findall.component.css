@@ -39,3 +39,12 @@ td, th {
 .mat-mdc-row:hover .mat-mdc-cell {
   background-color: #ededf2;
 }
+
+.mat-column-id
+ {
+  width: 64px;
+}
+
+.mat-mdc-table-sticky {
+  background: #c6d7f6;
+}

@@ -1,0 +1,130 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.form-container .section-filter {
+  width: 50%;
+}
+
+.tabela {
+  min-height: 650px;
+}
+
+.button-row {
+  max-width: 150px;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  /* border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent; */
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: #ededf2;
+}
+
+.mat-column-id,
+.mat-column-codigo,
+.mat-column-tipo,
+.mat-column-automatico,
+.mat-column-tipoValor,
+.mat-column-ativo {
+  width: 64px;
+}
+
+.mat-mdc-table-sticky {
+  background: #c6d7f6;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row {
+  cursor: pointer;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail-wrapper {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  grid-template-columns: 100%;
+  transition: grid-template-rows 225ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.example-element-detail-wrapper-expanded {
+  grid-template-rows: 1fr;
+}
+
+.example-element-detail {
+  display: flex;
+  min-height: 0;
+}
+
+.example-element-diagram {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+}
+
+.example-element-campos {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  opacity: 1;
+}
+
+.example-element-campos .label,
+.text {
+  font-size: small;
+}
+.example-element-campos .label {
+  width: 120px;
+  text-align: end;
+  font-weight: bold;
+}
+.example-element-campos .text {
+  font-weight: 500;
+  color: blue;
+}
+
+.example-toggle-button {
+  transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.example-toggle-button-expanded {
+  transform: rotate(180deg);
+}

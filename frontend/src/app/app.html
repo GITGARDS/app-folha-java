@@ -1,1 +1,12 @@
-<router-outlet/>
+@if (isLoading) {
+<div class="w-full h-full flex flex-col gap-15 items-center justify-center bg-gray-200">
+  <mat-spinner></mat-spinner>
+  <span>Aguarde...</span>
+  <mat-card class="flex flex-col gap-15 items-center justify-center h-[400px] w-[1000px]">
+    <h1 class="text-5xl font-bold text-green-800 uppercase">Sistema de folha de pagamento</h1>
+    <mat-icon class="scale-500">payments</mat-icon>
+  </mat-card>
+</div>
+} @else {
+<router-outlet />
+}

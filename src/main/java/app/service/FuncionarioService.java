@@ -16,16 +16,16 @@ public class FuncionarioService {
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
 
-	public Funcionario create(Funcionario funcionario) {
-		return this.funcionarioRepository.save(funcionario);
+	public Funcionario create(Funcionario data) {
+		return this.funcionarioRepository.save(data);
 	}
 
-	public List<Funcionario> create(List<Funcionario> funcionarios) {
-		return this.funcionarioRepository.saveAll(funcionarios);
+	public List<Funcionario> create(List<Funcionario> data) {
+		return this.funcionarioRepository.saveAll(data);
 	}
 
-	public Funcionario editById(long id, Funcionario funcionario) {
-		Funcionario regEdit = funcionario;
+	public Funcionario editById(long id, Funcionario data) {
+		Funcionario regEdit = data;
 		regEdit.setId(id);
 		return this.funcionarioRepository.save(regEdit);
 	}
@@ -47,8 +47,8 @@ public class FuncionarioService {
 		return this.funcionarioRepository.findAll(pageable);
 	}
 	
-	public Page<Funcionario> findAll(String nome, Pageable pageable) {
-		return this.funcionarioRepository.findByNomeContaining(nome, pageable);
+	public Page<Funcionario> findAll(String filter, Pageable pageable) {
+		return this.funcionarioRepository.findByNomeContaining(filter, pageable);
 	}
 
 }

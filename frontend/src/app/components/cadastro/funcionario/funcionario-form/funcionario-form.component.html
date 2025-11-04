@@ -1,0 +1,66 @@
+<form [formGroup]="form" novalidate>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title style="font-weight: bold; text-transform: uppercase">{{
+        title
+      }}</mat-card-title>
+      <mat-card-subtitle style="font-size: small">
+        {{ data.opcao === 'editar' ? 'Editando => ' + data.data.id + "-" + data.data.nome : 'Novo registro' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="nome" />
+            @if (form.controls['nome'].hasError('required')) {
+            <mat-error>Campo nome e de preenchimento <strong>obrigatorio</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Cargo</mat-label>
+            <input matInput formControlName="cargo" />
+            @if (form.controls['cargo'].hasError('required')) {
+            <mat-error>Campo cargo e de preenchimento <strong>obrigatorio</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Salario Base</mat-label>
+            <input matInput formControlName="salarioBase" type="number" />
+            @if (form.controls['salarioBase'].hasError('required')) {
+            <mat-error
+              >Campo Salario Base e de preenchimento <strong>obrigatorio</strong></mat-error
+            >
+            }
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+
+    <mat-card-actions>
+      <button matButton [mat-dialog-close]="false" (click)="onNoClick()">Cancelar</button>
+      <button
+        matButton
+        [mat-dialog-close]="true"
+        (click)="okClick()"
+        cdkFocusInitial
+        [disabled]="form.invalid"
+      >
+        Ok
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+<!-- {{ data | json }} -->
