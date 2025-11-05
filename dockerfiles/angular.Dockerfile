@@ -1,5 +1,5 @@
 # Estágio 1: Build do Angular
-FROM node:22-alpine as build
+FROM node:22-alpine AS build
 ARG DIREF=./frontend
 WORKDIR /app
 COPY ${DIREF}/package.json ${DIREF}/package-lock.json ./

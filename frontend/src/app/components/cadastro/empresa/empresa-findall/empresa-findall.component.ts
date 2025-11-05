@@ -141,17 +141,7 @@ export class EmpresaFindallComponent implements OnInit, AfterViewInit {
         })
       )
 
-      .subscribe({
-        next: (ret: any) => {
-          const page: Page = {
-            page: this.paginator.pageIndex,
-            size: this.paginator.pageSize,
-            sort: ret.active,
-            sortDirection: ret.direction,
-          };
-          this.loadEmpresaPage(this.input.nativeElement.value, page);
-        },
-      });
+      .subscribe();
   }
 
   loadEmpresaPage(input: string, page: Page) {

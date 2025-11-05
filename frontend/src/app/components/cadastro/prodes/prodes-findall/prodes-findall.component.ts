@@ -148,17 +148,7 @@ export class ProdesFindallComponent implements OnInit, AfterViewInit {
           this.onPageDefault();
         })
       )
-      .subscribe({
-        next: (ret: any) => {
-          const page: Page = {
-            page: this.paginator.pageIndex,
-            size: this.paginator.pageSize,
-            sort: ret.active,
-            sortDirection: ret.direction,
-          };
-          this.loadProdesPage(this.input.nativeElement.value, page);
-        },
-      });
+      .subscribe();
   }
 
   loadProdesPage(input: string, page: Page) {

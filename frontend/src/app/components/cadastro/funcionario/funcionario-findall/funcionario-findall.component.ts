@@ -9,7 +9,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginator, MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatProgressSpinner, MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
@@ -39,6 +39,7 @@ import { FuncionarioFindallDataSource } from "./funcionario-findall-datasource";
     MatIconModule,
     MatMenuModule,
     MatProgressBarModule,
+    MatProgressSpinner
   ],
 })
 export class FuncionarioFindallComponent implements OnInit, AfterViewInit {
@@ -129,17 +130,7 @@ export class FuncionarioFindallComponent implements OnInit, AfterViewInit {
           this.onPageDefault();
         })
       )
-      .subscribe({
-        next: (ret: any) => {
-          const page: Page = {
-            page: this.paginator.pageIndex,
-            size: this.paginator.pageSize,
-            sort: ret.active,
-            sortDirection: ret.direction,
-          };
-          this.loadFuncionarioPage(this.input.nativeElement.value, page);
-        },
-      });
+      .subscribe();
   }
 
   loadFuncionarioPage(input: string, page: Page) {

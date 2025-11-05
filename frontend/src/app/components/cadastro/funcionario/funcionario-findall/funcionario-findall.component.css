@@ -2,6 +2,10 @@ table {
   width: 100%;
 }
 
+.tabela{
+  min-height: 614px;
+}
+
 .mat-mdc-form-field {
   font-size: 14px;
   width: 100%;
@@ -20,10 +24,6 @@ td, th {
 
 .form-container .section-filter{
   width: 50%;
-}
-
-.tabela{
-  min-height: 650px;
 }
 
 .button-row {
